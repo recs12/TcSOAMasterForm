@@ -47,13 +47,14 @@ namespace TcSOAMasterForm
             CredentialManager credentialManager = new XCredentialsManager();
             credentialManager.SetUserPassword(o.User, o.Password, "");
             var connection = new Connection(o.Url, new System.Net.CookieCollection(), credentialManager, "REST", "HTTP", false);
+            WriteLine("[+]: Connection teamcenter established");
 
             // Data Management Service
             var dmService = DataManagementService.getService(connection);
 
             dmService
                 .GetMasterItemRevById(connection, o.DrawingNumber, o.Revision)
-                .UpdateFormProperty("p9Weight", o.Weight) // hide the service
+                .UpdateFormProperty("p9Weight", o.Weight)
                 .UpdateFormProperty("p9DimensionalX", o.DimX)
                 .UpdateFormProperty("p9DimensionalY", o.DimY)
                 .UpdateFormProperty("p9DimensionalZ", o.DimZ);

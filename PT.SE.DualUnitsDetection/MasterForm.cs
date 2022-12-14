@@ -1,15 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Teamcenter.Services.Strong.Core;
 using Teamcenter.Services.Strong.Core._2008_06.DataManagement;
 using Teamcenter.Services.Strong.Core._2010_09.DataManagement;
 using Teamcenter.Soa.Client.Model;
 using Teamcenter.Soa.Common;
 using static LanguageExt.Prelude;
-using static System.Console;
-
-using System;
-using System.IO;
-using System.Linq;
 
 namespace TcSOAMasterForm
 {
