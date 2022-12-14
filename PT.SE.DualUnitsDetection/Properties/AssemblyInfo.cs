@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PT.SE.DualUnitsDetection")]
+[assembly: AssemblyTitle("TcSOAMasterForm")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Premier Tech Ltd")]
-[assembly: AssemblyProduct("PT.SE.DualUnitsDetection")]
-[assembly: AssemblyCopyright("Copyright © Premier Tech Ltd 2022")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TcSOAMasterForm")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

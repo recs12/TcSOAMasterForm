@@ -1,9 +1,9 @@
 ﻿using Teamcenter.Schemas.Soa._2006_03.Exceptions;
 using Teamcenter.Soa.Client;
 
-namespace PT.SE.DualUnitsDetection
+namespace TcSOAMasterForm
 {
-    internal class HardCodedCredentialsManager : CredentialManager
+    internal class XCredentialsManager : CredentialManager
     {
         public string username = "";
         public string password = "";

@@ -1,33 +1,39 @@
-﻿using SolidEdge.SDK;
-using SolidEdgeConstants;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
+﻿using CommandLine;
 using Teamcenter.Services.Strong.Core;
-using Teamcenter.Services.Strong.Core._2010_09.DataManagement;
-using Teamcenter.Services.Strong.Query;
-using Teamcenter.Services.Strong.Query._2007_06.SavedQuery;
-using Teamcenter.Services.Strong.Query._2010_04.SavedQuery;
 using Teamcenter.Soa.Client;
-using Teamcenter.Soa.Client.Model;
-using Teamcenter.Soa.Client.Model.Strong;
-using Teamcenter.Soa.Common;
+using static System.Console;
 
-namespace PT.SE.DualUnitsDetection
+
+namespace TcSOAMasterForm
 {
-
     public class Options
     {
-        [CommandLine.Option('u', "uii", Required = true, HelpText = "")]
-        public string Uii { get; set; }
+        [Option('d', "drawingNumber", Required = true, HelpText = "")]
+        public string DrawingNumber { get; set; }
 
-        [CommandLine.Option('w', "weight", Required = true, HelpText = "")]
+        [Option('r', "revision", Required = true, HelpText = "")]
+        public string Revision { get; set; }
+
+        [Option('w', "weight", Required = true, HelpText = "")]
         public string Weight { get; set; }
 
-        [CommandLine.Option('d', "dimension", Required = false, HelpText = "")]
-        public string Dimension { get; set; }
+        [Option('x', "dimX", Required = true, HelpText = "")]
+        public string DimX { get; set; }
+
+        [Option('y', "dimY", Required = true, HelpText = "")]
+        public string DimY { get; set; }
+
+        [Option('z', "dimZ", Required = true, HelpText = "")]
+        public string DimZ { get; set; }
+
+        [Option('u', "user", Required = true, HelpText = "")]
+        public string User { get; set; }
+
+        [Option('p', "password", Required = true, HelpText = "")]
+        public string Password { get; set; }
+
+        [Option('l', "url", Required = true, HelpText = "")]
+        public string Url { get; set; }
 
     }
 
@@ -35,18 +41,28 @@ namespace PT.SE.DualUnitsDetection
     {
         static void Main(string[] args)
         {
-            var options = CommandLine.Parser.Default.ParseArguments<Options>(args).Value;
+            var o = Parser.Default.ParseArguments<Options>(args).Value;
 
-            Console.WriteLine("Connection to TC");
-            CredentialManager credentialManager = new HardCodedCredentialsManager();
-            credentialManager.SetUserPassword("test_user", "plmtest", "");
-            var connection = new Teamcenter.Soa.Client.Connection("http://tc13dv.premiertech.com/tc", new System.Net.CookieCollection(), credentialManager, "REST", "HTTP", false);
-            SavedQueryService sqService = SavedQueryService.getService(connection);
-            DataManagementService dmService = DataManagementService.getService(connection);
+            // Credentials
+            CredentialManager credentialManager = new XCredentialsManager();
+            credentialManager.SetUserPassword(o.User, o.Password, "");
+            var connection = new Connection(o.Url, new System.Net.CookieCollection(), credentialManager, "REST", "HTTP", false);
+
+            // Data Management Service
+            var dmService = DataManagementService.getService(connection);
+
+            dmService
+                .GetMasterItemRevById(connection, o.DrawingNumber, o.Revision)
+                .UpdateFormProperty("p9Weight", o.Weight) // hide the service
+                .UpdateFormProperty("p9DimensionalX", o.DimX)
+                .UpdateFormProperty("p9DimensionalY", o.DimY)
+                .UpdateFormProperty("p9DimensionalZ", o.DimZ);
 
 
+            WriteLine("Press key to exit...");
+            ReadKey();
         }
-
-
     }
 }
+
+
